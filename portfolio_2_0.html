@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nithin Kumar Meena — Full-Stack &amp; ML Systems Engineer</title>
+    <meta name="description"
+        content="Nithin Kumar Meena builds production-grade full-stack and ML systems — REST APIs, real-time infrastructure, and computer vision pipelines serving 40,000+ inferences a day.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-void: #0A0D10;
+            --bg-panel: #12161C;
+            --bg-panel-2: #171C23;
+            --border: #242B33;
+            --border-soft: #1A2027;
+            --text-primary: #E8EBEF;
+            --text-secondary: #9AA7B5;
+            --text-tertiary: #5E6873;
+            --accent-signal: #6EE7C9;
+            --accent-signal-soft: rgba(110, 231, 201, 0.12);
+            --accent-warn: #F2B544;
+            --accent-warn-soft: rgba(242, 181, 68, 0.12);
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'IBM Plex Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --container: 1140px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg-void);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--border-soft) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border-soft) 1px, transparent 1px);
+            background-size: 64px 64px;
+            opacity: 0.35;
+            pointer-events: none;
+            z-index: 0;
+            mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, black 40%, transparent 80%);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img,
+        svg {
+            display: block;
+            max-width: 100%;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        *:focus-visible {
+            outline: 2px solid var(--accent-signal);
+            outline-offset: 3px;
+            border-radius: 2px;
+        }
+
+        .num {
+            font-family: var(--font-mono);
+            color: var(--accent-signal);
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ---------- NAV ---------- */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(10, 13, 16, 0.78);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .nav-inner {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .logo {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            white-space: nowrap;
+            letter-spacing: 0.02em;
+        }
+
+        .logo .cursor {
+            color: var(--accent-signal);
+            animation: blink 1.1s step-end infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            50.01%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            letter-spacing: 0.04em;
+            color: var(--text-secondary);
+            overflow-x: auto;
+            scrollbar-width: none;
+            white-space: nowrap;
+        }
+
+        .nav-links::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-links a {
+            transition: color .15s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-signal);
+        }
+
+        .status-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent-signal);
+            box-shadow: 0 0 0 0 rgba(110, 231, 201, 0.5);
+            animation: pulse-dot 2s ease-out infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse-dot {
+            0% {
+                box-shadow: 0 0 0 0 rgba(110, 231, 201, 0.45);
+            }
+
+            70% {
+                box-shadow: 0 0 0 6px rgba(110, 231, 201, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(110, 231, 201, 0);
+            }
+        }
+
+        /* ---------- HERO ---------- */
+        .hero {
+            padding: 148px 0 100px;
+            min-height: 88vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 1fr;
+            gap: 64px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            color: var(--accent-warn);
+            letter-spacing: 0.04em;
+            margin-bottom: 18px;
+        }
+
+        .hero-copy h1 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(2.6rem, 5.4vw, 4.4rem);
+            line-height: 1.05;
+            letter-spacing: -0.01em;
+            margin-bottom: 22px;
+        }
+
+        .lede {
+            font-size: 1.06rem;
+            color: var(--text-secondary);
+            max-width: 48ch;
+            line-height: 1.65;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            margin-top: 36px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            letter-spacing: 0.03em;
+            padding: 13px 22px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform .15s ease, background .15s ease, border-color .15s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent-signal);
+            color: #06231C;
+            font-weight: 600;
+            border: 1px solid var(--accent-signal);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-ghost {
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent-signal);
+            color: var(--accent-signal);
+            transform: translateY(-2px);
+        }
+
+        .hero-panel {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 26px;
+            box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.65);
+        }
+
+        .panel-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .stat {
+            background: var(--bg-panel-2);
+            border: 1px solid var(--border-soft);
+            border-radius: 8px;
+            padding: 16px 14px;
+        }
+
+        .stat-value {
+            display: block;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .diagram-wrap {
+            padding-top: 22px;
+            border-top: 1px solid var(--border-soft);
+        }
+
+        .diagram-fallback {
+            display: none;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .node-box {
+            fill: var(--bg-panel-2);
+            stroke: var(--border);
+            stroke-width: 1.4;
+        }
+
+        .node-label {
+            fill: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .node-caption {
+            fill: var(--text-tertiary);
+            font-family: var(--font-mono);
+            font-size: 9px;
+        }
+
+        .wire {
+            stroke: var(--border);
+            stroke-width: 1.4;
+            fill: none;
+        }
+
+        .pulse-a {
+            fill: var(--accent-signal);
+            filter: url(#glow-signal);
+        }
+
+        .pulse-b {
+            fill: var(--accent-warn);
+            filter: url(#glow-warn);
+        }
+
+        /* ---------- SECTIONS ---------- */
+        .section {
+            padding: 96px 0;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 44px;
+        }
+
+        .route {
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            color: var(--accent-warn);
+            background: var(--accent-warn-soft);
+            border: 1px solid rgba(242, 181, 68, 0.25);
+            padding: 4px 10px;
+            border-radius: 5px;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+
+        .section-head h2 {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: clamp(1.6rem, 3vw, 2.1rem);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+
+        .reveal.is-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ABOUT */
+        .about-text {
+            font-size: 1.08rem;
+            line-height: 1.75;
+            color: var(--text-secondary);
+            max-width: 72ch;
+        }
+
+        /* STACK */
+        .stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 18px;
+        }
+
+        .stack-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 22px;
+            transition: border-color .2s ease, transform .2s ease;
+        }
+
+        .stack-card:hover {
+            border-color: var(--accent-signal);
+            transform: translateY(-3px);
+        }
+
+        .stack-card-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .stack-card-head h3 {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .stack-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .stack-status .dot {
+            width: 6px;
+            height: 6px;
+        }
+
+        .stack-desc {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+            margin-bottom: 16px;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .chip {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--text-tertiary);
+            background: var(--bg-panel-2);
+            border: 1px solid var(--border-soft);
+            padding: 4px 9px;
+            border-radius: 20px;
+            letter-spacing: 0.01em;
+        }
+
+        /* DEPLOY LOG */
+        .log-list {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .log-list::before {
+            content: "";
+            position: absolute;
+            left: 5px;
+            top: 8px;
+            bottom: 8px;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .log-entry {
+            position: relative;
+            margin-bottom: 34px;
+        }
+
+        .log-entry:last-child {
+            margin-bottom: 0;
+        }
+
+        .log-dot {
+            position: absolute;
+            left: -30px;
+            top: 6px;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: var(--bg-void);
+            border: 2px solid var(--border);
+        }
+
+        .log-entry.is-head .log-dot {
+            background: var(--accent-signal);
+            border-color: var(--accent-signal);
+            box-shadow: 0 0 0 4px var(--accent-signal-soft);
+        }
+
+        .log-card {
+            background: var(--bg-panel-2);
+            border: 1px solid var(--border-soft);
+            border-left: 3px solid var(--border);
+            border-radius: 8px;
+            padding: 22px 24px;
+        }
+
+        .log-entry.is-head .log-card {
+            border-left-color: var(--accent-signal);
+        }
+
+        .log-meta {
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            color: var(--text-tertiary);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .log-meta .hash {
+            color: var(--accent-warn);
+        }
+
+        .branch-tag {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--accent-signal);
+            background: var(--accent-signal-soft);
+            border: 1px solid rgba(110, 231, 201, 0.3);
+            padding: 1px 8px;
+            border-radius: 4px;
+        }
+
+        .log-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.12rem;
+            margin-bottom: 14px;
+        }
+
+        .log-body li {
+            position: relative;
+            padding-left: 16px;
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .log-body li:last-child {
+            margin-bottom: 0;
+        }
+
+        .log-body li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: var(--text-tertiary);
+        }
+
+        /* BUILDS */
+        .builds-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .build-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            transition: border-color .2s ease, transform .2s ease;
+        }
+
+        .build-card:hover {
+            border-color: var(--accent-signal);
+            transform: translateY(-3px);
+        }
+
+        .build-card h3 {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+        }
+
+        .build-chips {
+            margin-bottom: 14px;
+        }
+
+        .build-desc {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+            flex-grow: 1;
+        }
+
+        .build-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border-soft);
+            font-family: var(--font-mono);
+        }
+
+        .build-metric {
+            font-size: 0.74rem;
+        }
+
+        .build-link {
+            font-size: 0.74rem;
+            color: var(--text-tertiary);
+            transition: color .15s ease;
+            white-space: nowrap;
+        }
+
+        .build-link:hover {
+            color: var(--accent-signal);
+        }
+
+        /* RECORD */
+        .record-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .record-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 28px;
+        }
+
+        .record-card .record-kicker {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .record-card h3 {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+
+        .record-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .record-big {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 2.6rem;
+            color: var(--accent-signal);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        /* CONTACT */
+        .contact {
+            background: var(--bg-panel);
+            border-top: 1px solid var(--border-soft);
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .contact-head h2 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+            margin-bottom: 14px;
+        }
+
+        .contact-head p {
+            color: var(--text-secondary);
+            max-width: 56ch;
+            margin-bottom: 40px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .contact-rows {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .contact-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-panel-2);
+            border: 1px solid var(--border-soft);
+            border-radius: 8px;
+            padding: 16px 18px;
+        }
+
+        .contact-row .label {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .contact-row .value {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            word-break: break-word;
+        }
+
+        .contact-row a.value:hover {
+            color: var(--accent-signal);
+        }
+
+        .copy-btn {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 6px 10px;
+            border-radius: 5px;
+            flex-shrink: 0;
+            transition: color .15s ease, border-color .15s ease;
+        }
+
+        .copy-btn:hover {
+            color: var(--accent-signal);
+            border-color: var(--accent-signal);
+        }
+
+        footer {
+            padding: 32px 0;
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            color: var(--text-tertiary);
+            text-align: center;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .dot,
+            .cursor {
+                animation: none !important;
+            }
+
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+        @media (max-width:860px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .builds-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .record-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-rows {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 120px 0 72px;
+                min-height: auto;
+            }
+
+            .section {
+                padding: 72px 0;
+            }
+        }
+
+        @media (max-width:480px) {
+            .diagram-svg {
+                display: none;
+            }
+
+            .diagram-fallback {
+                display: block;
+            }
+
+            .nav-links {
+                gap: 18px;
+            }
+
+            .stat-grid {
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="nav">
+        <div class="nav-inner">
+            <a href="#top" class="logo">nithin<span class="cursor">_</span></a>
+            <nav class="nav-links">
+                <a href="#about">about</a>
+                <a href="#stack">stack</a>
+                <a href="#log">log</a>
+                <a href="#builds">builds</a>
+                <a href="#record">record</a>
+                <a href="#contact">contact</a>
+            </nav>
+            <div class="status-pill"><span class="dot"></span>operational</div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- HERO -->
+        <section id="top" class="hero">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <p class="eyebrow">// full-stack &amp; ml systems engineer</p>
+                    <h1>Nithin Kumar<br>Meena</h1>
+                    <p class="lede">I build the parts of a product that aren't allowed to go down — APIs under real
+                        traffic, computer vision pipelines that run unattended at scale, and the real-time
+                        infrastructure underneath. Based in Hyderabad, working with teams everywhere.</p>
+                    <div class="hero-actions">
+                        <a href="#builds" class="btn btn-primary">See the work →</a>
+                        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+                    </div>
+                </div>
+
+                <div class="hero-panel">
+                    <div class="panel-head">
+                        <span>system metrics</span>
+                        <span class="dot"></span>
+                    </div>
+                    <div class="stat-grid">
+                        <div class="stat">
+                            <span class="stat-value" data-target="40000" data-suffix="+">0</span>
+                            <span class="stat-label">inferences / day</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" data-target="99" data-suffix="%+">0</span>
+                            <span class="stat-label">model accuracy</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" data-target="70" data-suffix="%">0</span>
+                            <span class="stat-label">manual work cut</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" data-target="3" data-suffix="+">0</span>
+                            <span class="stat-label">years in production</span>
+                        </div>
+                    </div>
+
+                    <div class="diagram-wrap">
+                        <svg class="diagram-svg" viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg" role="img"
+                            aria-label="Diagram of a request flowing from client to API to ML pipeline and database">
+                            <defs>
+                                <filter id="glow-signal" x="-200%" y="-200%" width="500%" height="500%">
+                                    <feGaussianBlur stdDeviation="2.4" result="b" />
+                                    <feMerge>
+                                        <feMergeNode in="b" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                                <filter id="glow-warn" x="-200%" y="-200%" width="500%" height="500%">
+                                    <feGaussianBlur stdDeviation="2.4" result="b" />
+                                    <feMerge>
+                                        <feMergeNode in="b" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+
+                            <path class="wire" d="M70,102 L320,102 L565,42" />
+                            <path class="wire" d="M70,102 L320,102 L565,158" />
+
+                            <rect class="node-box" x="10" y="80" width="110" height="44" rx="6" />
+                            <text class="node-label" x="65" y="98" text-anchor="middle">CLIENT</text>
+                            <text class="node-caption" x="65" y="112" text-anchor="middle">browser / app</text>
+
+                            <rect class="node-box" x="255" y="80" width="130" height="44" rx="6" />
+                            <text class="node-label" x="320" y="98" text-anchor="middle">API</text>
+                            <text class="node-caption" x="320" y="112" text-anchor="middle">rest + socket.io</text>
+
+                            <rect class="node-box" x="500" y="20" width="130" height="44" rx="6" />
+                            <text class="node-label" x="565" y="38" text-anchor="middle">ML PIPELINE</text>
+                            <text class="node-caption" x="565" y="52" text-anchor="middle">pytorch</text>
+
+                            <rect class="node-box" x="500" y="136" width="130" height="44" rx="6" />
+                            <text class="node-label" x="565" y="154" text-anchor="middle">DATABASE</text>
+                            <text class="node-caption" x="565" y="168" text-anchor="middle">mongodb</text>
+
+                            <circle class="pulse-a" r="4">
+                                <animateMotion dur="3.4s" repeatCount="indefinite" path="M70,102 L320,102 L565,42" />
+                            </circle>
+                            <circle class="pulse-b" r="4">
+                                <animateMotion dur="4s" begin="0.6s" repeatCount="indefinite"
+                                    path="M70,102 L320,102 L565,158" />
+                            </circle>
+                        </svg>
+                        <p class="diagram-fallback">client → api (rest + socket.io) → ml pipeline / database</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section id="about" class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="route">GET /about</span>
+                    <h2>About</h2>
+                </div>
+                <p class="about-text reveal">
+                    I started as a frontend intern shipping UI tickets. Three years later I was the contract CTO of a
+                    healthcare startup, owning the technology roadmap, and the engineer who put a computer vision model
+                    into a pipeline making <span class="num">40,000+</span> automated decisions a day with no human in
+                    the loop. In between, I've built real-time systems with Socket.io, designed REST APIs and MongoDB
+                    schemas for production load, and trained a segmentation model over <span
+                        class="num">6,000,000</span> iterations until it held at <span class="num">99%+</span> accuracy.
+                    I work across the stack because production systems don't respect the boundary between frontend,
+                    backend, and ML — somebody has to own the whole path from request to result.
+                </p>
+            </div>
+        </section>
+
+        <!-- STACK -->
+        <section id="stack" class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="route">GET /stack</span>
+                    <h2>Stack status</h2>
+                </div>
+                <div class="stack-grid">
+
+                    <div class="stack-card reveal">
+                        <div class="stack-card-head">
+                            <h3>Frontend</h3>
+                            <span class="stack-status"><span class="dot"></span>stable</span>
+                        </div>
+                        <p class="stack-desc">Interfaces built to stay fast under real data volume, not just in a demo
+                            recording.</p>
+                        <div class="chips">
+                            <span class="chip">React.js</span><span class="chip">Next.js</span><span
+                                class="chip">Redux</span>
+                            <span class="chip">TypeScript</span><span class="chip">Tailwind CSS</span><span
+                                class="chip">Framer Motion</span>
+                        </div>
+                    </div>
+
+                    <div class="stack-card reveal">
+                        <div class="stack-card-head">
+                            <h3>Backend</h3>
+                            <span class="stack-status"><span class="dot"></span>stable</span>
+                        </div>
+                        <p class="stack-desc">Services written to be read by someone debugging them at 2am, not just to
+                            pass a code review.</p>
+                        <div class="chips">
+                            <span class="chip">Node.js</span><span class="chip">Express.js</span><span
+                                class="chip">Golang</span>
+                            <span class="chip">Socket.io</span><span class="chip">REST</span><span
+                                class="chip">Microservices</span>
+                        </div>
+                    </div>
+
+                    <div class="stack-card reveal">
+                        <div class="stack-card-head">
+                            <h3>Data</h3>
+                            <span class="stack-status"><span class="dot"></span>stable</span>
+                        </div>
+                        <p class="stack-desc">Schemas and indexes built around how the data is actually queried, not
+                            just how it's modeled.</p>
+                        <div class="chips">
+                            <span class="chip">MongoDB</span><span class="chip">Mongoose</span><span
+                                class="chip">SQL</span><span class="chip">Indexing</span>
+                        </div>
+                    </div>
+
+                    <div class="stack-card reveal">
+                        <div class="stack-card-head">
+                            <h3>AI / ML</h3>
+                            <span class="stack-status"><span class="dot"></span>stable</span>
+                        </div>
+                        <p class="stack-desc">Models trained to ship into a pipeline and evaluated on production error
+                            rates, not notebook accuracy.</p>
+                        <div class="chips">
+                            <span class="chip">PyTorch</span><span class="chip">Computer Vision</span><span
+                                class="chip">NLP</span><span class="chip">Hugging Face</span>
+                        </div>
+                    </div>
+
+                    <div class="stack-card reveal">
+                        <div class="stack-card-head">
+                            <h3>Infrastructure</h3>
+                            <span class="stack-status"><span class="dot"></span>stable</span>
+                        </div>
+                        <p class="stack-desc">The unglamorous layer that makes everything above it reliable enough to
+                            trust.</p>
+                        <div class="chips">
+                            <span class="chip">Docker</span><span class="chip">Git</span><span
+                                class="chip">CI/CD</span><span class="chip">Linux</span><span class="chip">Unit
+                                Testing</span><span class="chip">Agile</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- DEPLOY LOG -->
+        <section id="log" class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="route">GET /log</span>
+                    <h2>Deploy log</h2>
+                </div>
+
+                <div class="log-list">
+
+                    <div class="log-entry is-head reveal">
+                        <span class="log-dot"></span>
+                        <div class="log-card">
+                            <div class="log-meta">
+                                <span><span class="hash">commit a1f6e02</span> <span class="branch-tag">HEAD →
+                                        main</span></span>
+                                <span>Date: Aug 2025 – Present</span>
+                            </div>
+                            <div class="log-title">Freelance Full Stack Developer</div>
+                            <ul class="log-body">
+                                <li>Architected and delivered end-to-end MERN applications across multiple client
+                                    industries, cutting time-to-launch by up to <span class="num">30%</span> with
+                                    reusable component and API patterns.</li>
+                                <li>Built REST APIs with optimized MongoDB indexing, improving data retrieval by roughly
+                                    <span class="num">25%</span> per project.</li>
+                                <li>Owned the full lifecycle solo — requirements, system design, build, CI/CD,
+                                    deployment, and post-launch support.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="log-entry reveal">
+                        <span class="log-dot"></span>
+                        <div class="log-card">
+                            <div class="log-meta">
+                                <span><span class="hash">commit 7c2d9f4</span></span>
+                                <span>Date: Jan 2025 – Jul 2025</span>
+                            </div>
+                            <div class="log-title">Chief Technology Officer (Contract) — Mesdo, Healthcare Technology
+                            </div>
+                            <ul class="log-body">
+                                <li>Owned technology strategy and execution for a digital healthcare platform, directing
+                                    engineers, designers, and stakeholders to hit product milestones on schedule.</li>
+                                <li>Designed and shipped an AI resume-parsing system using NLP and transformer models,
+                                    cutting manual data entry by <span class="num">70%</span> and speeding up candidate
+                                    onboarding.</li>
+                                <li>Built real-time infrastructure with Node.js and Socket.io that measurably improved
+                                    platform reliability and user retention.</li>
+                                <li>Set the technology stack, microservices architecture, and a 12-month engineering
+                                    roadmap for projected growth.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="log-entry reveal">
+                        <span class="log-dot"></span>
+                        <div class="log-card">
+                            <div class="log-meta">
+                                <span><span class="hash">commit 4e88ab1</span></span>
+                            </div>
+                            <div class="log-title">Full Stack Developer — Suravika Technologies, Hyderabad</div>
+                            <ul class="log-body">
+                                <li>Designed and shipped dynamic web apps with React.js and Node.js/Express.js across
+                                    multiple concurrent client projects.</li>
+                                <li>Built REST APIs and third-party integrations, cutting integration turnaround time by
+                                    <span class="num">30%</span>.</li>
+                                <li>Worked closely with design and QA to refine functionality, reaching a <span
+                                        class="num">25%</span> faster delivery cycle.</li>
+                                <li>Cut software defects by <span class="num">40%</span> through systematic unit testing
+                                    and end-to-end coverage across web and mobile.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="log-entry reveal">
+                        <span class="log-dot"></span>
+                        <div class="log-card">
+                            <div class="log-meta">
+                                <span><span class="hash">commit 9b30c5d</span></span>
+                                <span>Date: Mar 2023 – May 2024</span>
+                            </div>
+                            <div class="log-title">ML Engineer, Computer Vision — AIdroid, Hyderabad</div>
+                            <ul class="log-body">
+                                <li>Trained a production image-segmentation model on <span class="num">60,000+</span>
+                                    images over <span class="num">6,000,000</span> iterations in PyTorch, reaching <span
+                                        class="num">99%+</span> accuracy with a 0.5–1% inference error rate.</li>
+                                <li>Deployed it to a pipeline processing <span class="num">40,000+</span> images a day
+                                    for automated quality assessment — zero manual review required.</li>
+                                <li>Built a multi-class classifier for vehicle type and shot angle that powered
+                                    customized image pipelines for a high-volume car marketplace.</li>
+                                <li>Applied augmentation and bias-correction techniques to improve generalization across
+                                    lighting and shooting conditions.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="log-entry reveal">
+                        <span class="log-dot"></span>
+                        <div class="log-card">
+                            <div class="log-meta">
+                                <span><span class="hash">commit 1a77f00</span></span>
+                                <span>Date: Nov 2022 – Feb 2023</span>
+                            </div>
+                            <div class="log-title">Web Development Intern — Conscript HR Advisors, Remote</div>
+                            <ul class="log-body">
+                                <li>Built and maintained UI across 20+ pages, contributing to a <span
+                                        class="num">15%</span> lift in measured user engagement.</li>
+                                <li>Standardized components and workflows, cutting delivery timelines by <span
+                                        class="num">20%</span>.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- BUILDS -->
+        <section id="builds" class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="route">GET /builds</span>
+                    <h2>Selected builds</h2>
+                </div>
+
+                <div class="builds-grid">
+
+                    <div class="build-card reveal">
+                        <h3>Zenith Studio</h3>
+                        <div class="build-chips chips">
+                            <span class="chip">React.js</span><span class="chip">Node.js</span><span
+                                class="chip">Socket.io</span><span class="chip">MongoDB</span>
+                        </div>
+                        <p class="build-desc">A real-time collaborative workspace for creative teams — concurrent
+                            multi-user sessions, live project boards, and asset sharing. WebSocket-based state sync
+                            keeps every collaborator's view consistent without a page refresh.</p>
+                        <div class="build-footer">
+                            <span class="build-metric num">real-time multi-user sync</span>
+                            <a class="build-link" href="https://github.com/Nithin0000007" target="_blank"
+                                rel="noopener">code ↗</a>
+                        </div>
+                    </div>
+
+                    <div class="build-card reveal">
+                        <h3>HireHub</h3>
+                        <div class="build-chips chips">
+                            <span class="chip">Node.js</span><span class="chip">Express.js</span><span
+                                class="chip">MongoDB</span><span class="chip">React.js</span>
+                        </div>
+                        <p class="build-desc">A full-stack job portal — candidate profiles, job search, application
+                            tracking, and role-based access control, with indexing tuned for concurrent load.</p>
+                        <div class="build-footer">
+                            <span class="build-metric num">+20% retrieval under load</span>
+                            <a class="build-link" href="https://github.com/Nithin0000007" target="_blank"
+                                rel="noopener">code ↗</a>
+                        </div>
+                    </div>
+
+                    <div class="build-card reveal">
+                        <h3>Learnify</h3>
+                        <div class="build-chips chips">
+                            <span class="chip">Node.js</span><span class="chip">React.js</span><span
+                                class="chip">MongoDB</span><span class="chip">Redux</span>
+                        </div>
+                        <p class="build-desc">A MERN e-learning platform with live instruction, personalized learning
+                            paths, and a mobile-first responsive interface running multiple active student cohorts.</p>
+                        <div class="build-footer">
+                            <span class="build-metric num">multi-cohort, live state</span>
+                            <a class="build-link" href="https://github.com/Nithin0000007" target="_blank"
+                                rel="noopener">code ↗</a>
+                        </div>
+                    </div>
+
+                    <div class="build-card reveal">
+                        <h3>Booklore</h3>
+                        <div class="build-chips chips">
+                            <span class="chip">Node.js</span><span class="chip">React.js</span><span
+                                class="chip">MongoDB</span><span class="chip">Tailwind</span>
+                        </div>
+                        <p class="build-desc">A blogging platform with a complete CMS — content creation, a publishing
+                            workflow, and social integrations to drive organic traffic. Owned end-to-end, from schema
+                            design to deployment.</p>
+                        <div class="build-footer">
+                            <span class="build-metric num">schema → deploy, solo</span>
+                            <a class="build-link" href="https://github.com/Nithin0000007" target="_blank"
+                                rel="noopener">code ↗</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- RECORD -->
+        <section id="record" class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="route">GET /record</span>
+                    <h2>Track record</h2>
+                </div>
+
+                <div class="record-grid">
+                    <div class="record-card reveal">
+                        <span class="record-kicker">certification</span>
+                        <h3>MERN Stack Web Developer — Zepskill</h3>
+                        <p>Jan 2022 – Sep 2022. Formal training in the exact stack used across every build on this page.
+                        </p>
+                    </div>
+                    <div class="record-card reveal">
+                        <span class="record-kicker">competitive programming</span>
+                        <div class="record-big">600+</div>
+                        <p>Algorithmic problems solved on LeetCode &amp; GeeksforGeeks — data structures and algorithms
+                            under real constraints, not just syntax.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="section contact">
+            <div class="container">
+                <div class="contact-head reveal">
+                    <span class="route">POST /contact</span>
+                    <h2 style="margin-top:14px;">Open a channel</h2>
+                    <p>Currently freelancing and open to full-time backend, full-stack, or ML systems engineering roles.
+                        Remote-first, happy to work across time zones.</p>
+                </div>
+
+                <div class="contact-rows reveal">
+                    <div class="contact-row">
+                        <div>
+                            <span class="label">Email</span>
+                            <a class="value"
+                                href="mailto:nithinkumarmeena994@gmail.com">nithinkumarmeena994@gmail.com</a>
+                        </div>
+                        <button class="copy-btn" id="copyEmail" type="button">copy</button>
+                    </div>
+
+                    <div class="contact-row">
+                        <div>
+                            <span class="label">Phone</span>
+                            <a class="value" href="tel:+919705142006">+91 97051 42006</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-row">
+                        <div>
+                            <span class="label">LinkedIn</span>
+                            <a class="value" href="https://linkedin.com/in/nithin070" target="_blank"
+                                rel="noopener">linkedin.com/in/nithin070</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-row">
+                        <div>
+                            <span class="label">GitHub</span>
+                            <a class="value" href="https://github.com/Nithin0000007" target="_blank"
+                                rel="noopener">github.com/Nithin0000007</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>© 2026 Nithin Kumar Meena — Hyderabad, India.</footer>
+
+    <script>
+        (function () {
+            var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // pause SMIL animations on the diagram if reduced motion is preferred
+            if (reduceMotion) {
+                var svg = document.querySelector('.diagram-svg');
+                if (svg && typeof svg.pauseAnimations === 'function') {
+                    try { svg.pauseAnimations(); } catch (e) { }
+                }
+            }
+
+            // count-up stats
+            var statEls = document.querySelectorAll('.stat-value[data-target]');
+            statEls.forEach(function (el) {
+                var target = parseFloat(el.getAttribute('data-target'));
+                var suffix = el.getAttribute('data-suffix') || '';
+                if (reduceMotion) {
+                    el.textContent = target.toLocaleString() + suffix;
+                    return;
+                }
+                var duration = 1200;
+                var start = null;
+                function step(ts) {
+                    if (!start) start = ts;
+                    var progress = Math.min((ts - start) / duration, 1);
+                    var eased = 1 - Math.pow(1 - progress, 3);
+                    var current = Math.round(target * eased);
+                    el.textContent = current.toLocaleString() + suffix;
+                    if (progress < 1) requestAnimationFrame(step);
+                }
+                requestAnimationFrame(step);
+            });
+
+            // scroll reveal
+            var revealEls = document.querySelectorAll('.reveal');
+            if ('IntersectionObserver' in window && !reduceMotion) {
+                var io = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-in');
+                            io.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+                revealEls.forEach(function (el) { io.observe(el); });
+            } else {
+                revealEls.forEach(function (el) { el.classList.add('is-in'); });
+            }
+
+            // copy email
+            var copyBtn = document.getElementById('copyEmail');
+            if (copyBtn) {
+                copyBtn.addEventListener('click', function () {
+                    var email = 'nithinkumarmeena994@gmail.com';
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(email).then(function () {
+                            copyBtn.textContent = 'copied';
+                            setTimeout(function () { copyBtn.textContent = 'copy'; }, 1500);
+                        }).catch(function () { });
+                    }
+                });
+            }
+        })();
+    </script>
+
+</body>
+
+</html>
